@@ -1,76 +1,147 @@
 import React, { Component } from 'react';
-import { Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink } from 'reactstrap';
+import { Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, Button} from 'reactstrap';
 import PropTypes from 'prop-types';
-
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../../assets/img/brand/logo.svg'
-import sygnet from '../../assets/img/brand/sygnet.svg'
+import logo from '../../assets/img/brand/evoting.png';
+import sygnet from '../../assets/img/brand/evoting.png';
+import { withRouter } from "react-router-dom";
+import { tokenAuth } from "../../middleware/cookies-manager";
+import swal from 'sweetalert';
+import { postApi } from "../../middleware/api";
 
 const propTypes = {
   children: PropTypes.node,
 };
-
 const defaultProps = {};
 
 class DefaultHeader extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      titleVote: "",
+    };
+
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleCekData = this.handleCekData.bind(this);
+
+  }
+  async componentWillMount() {
+    const userData = tokenAuth.tokenAuthenticated();
+    if (userData.authToken === true) {
+      const ktpRegion = userData.dataToken.ktp.nik.substring(2, 4);
+      if (ktpRegion === "01" || ktpRegion === "02") {
+        this.setState({
+          titleVote: "I"
+        });
+      } else if (ktpRegion === "04" || ktpRegion === "72" || ktpRegion === "73") {
+        this.setState({
+          titleVote: "II"
+        });
+      } else if (ktpRegion === "03" || ktpRegion === "71" || ktpRegion === "74") {
+        this.setState({
+          titleVote: "III"
+        });
+      }
+    }
+  }
+
+  async handleCekData(){
+  
+    const cekData = await swal({
+      title: "Cek data anda disini",
+      text: "masukan nomor ktp anda ",
+      icon: "warning",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "Masukan nomor ktp anda",
+          type: "text",
+          id:'noKTP',
+        },
+      },
+      dangerMode: true,
+      buttons: true,
+    })
+    if (cekData) {
+     this.setState({
+        ktp: document.getElementById("noKTP").value
+      })
+      const result = await postApi('/getWhereKtp',this.state)
+      console.log( this.state.ktp)
+      if(result.status === 404 ){
+        swal({
+          title: "Anda tidak terdaftar!",
+          text: "Anda tidak terdaftar pada database KPUD Provinsi Banten, silahkan cek kembali data anda",
+          icon: "error",
+        })
+      }else{
+        swal({
+          title: "Anda terdaftar!",
+          text: "Hai "+result.data.nama+", anda telah terdaftar pada database KPUD Provinsi Banten, silahkan lakukan registrasi ",
+          icon: "success",
+        })
+      }
+    }
+    
+  }
+
+
+ async handleLogout() {
+    const willLogout = await swal({
+      title: "Anda Yakin?",
+      text: "Anda yakin ingin keluar ",
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    })
+    if (willLogout) {
+      tokenAuth.eraseCookies();
+      
+      return this.props.history.push("/login");
+    }
+  }
   render() {
-
-    // eslint-disable-next-line
+    const userData = tokenAuth.tokenAuthenticated();
+    var loginStatus = userData.authToken;
+    var roleUsers  = userData.dataToken.role;
     const { children, ...attributes } = this.props;
-
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
+          full={{ src: logo, width: 89, height: 25, alt: 'E-Voting caleg 2019' }}
+          minimized={{ src: sygnet, width: 30, height: 30, alt: 'E-Voting caleg 2019' }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
-
-        <Nav className="d-md-down-none" navbar>
-          <NavItem className="px-3">
-            <NavLink href="/">Dashboard</NavLink>
-          </NavItem>
-          <NavItem className="px-3">
-            <NavLink href="#/users">Users</NavLink>
-          </NavItem>
-          <NavItem className="px-3">
-            <NavLink href="#">Settings</NavLink>
-          </NavItem>
-        </Nav>
+        <ul className="d-md-down-none navbar-nav">
+           {roleUsers !== 0 &&
+            <li className="px-3 nav-item"><a onClick={this.handleCekData} href="#" className="nav-link">Cek Data Anda</a></li>
+          }
+          </ul>
         <Nav className="ml-auto" navbar>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-list"></i></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
-          </NavItem>
           <AppHeaderDropdown direction="down">
-            <DropdownToggle nav>
-              <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-            </DropdownToggle>
+            {loginStatus === true ? (
+              <DropdownToggle nav>
+                <img src={userData.dataToken.ktp.foto} className="img-avatar"  />
+              </DropdownToggle>
+            ):(
+              <DropdownToggle nav>
+                <i className="fa fa-user-o" ></i>
+              </DropdownToggle>
+            )}
             <DropdownMenu right style={{ right: 'auto' }}>
-              <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-envelope-o"></i> Messages<Badge color="success">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem>
-              <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
-              <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
-              <DropdownItem><i className="fa fa-usd"></i> Payments<Badge color="secondary">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-              <DropdownItem><i className="fa fa-lock"></i> Logout</DropdownItem>
+              {loginStatus === true ? (
+                <DropdownItem  onClick={this.handleLogout}><i className="fa fa-sign-out"></i> 
+                  Logout
+                </DropdownItem>
+              ):(
+                <DropdownItem>
+                  <NavLink href="/#/login"><i className="fa fa-sign-in"></i>Login</NavLink>
+                </DropdownItem>
+              )}
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
-        <AppAsideToggler className="d-md-down-none" />
-        {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
     );
   }
@@ -79,4 +150,4 @@ class DefaultHeader extends Component {
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;
 
-export default DefaultHeader;
+export default withRouter(DefaultHeader);
