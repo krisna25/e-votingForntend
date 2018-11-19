@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ini adalah file milik gita. ini diubah kembali sehingga krisna harus mengecek apakah ini berubah. lalalallalalalalalalalalalaalalalalalalal
+=======
+perubahan terbaru bangettttttttttt
+>>>>>>> 6929f4741292825cd69f63a08106962e5729507e
