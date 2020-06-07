@@ -1,4 +1,8 @@
 ##Aplikasi e-voting dibuat dengan Free template coreUI
+# perhatikan:
+# e-votingFrontend dan e-voting Backend adalah satu kesatuan yang tidak bisa dipisah
+
+Disclaimer:
 
 Ini adalah Project yang dibuat sebagai bagian syarat untuk menyelesaikan skripsi saya di Universitas Gunadarma dengan judul “APLIKASI E-VOTING UNTUK PEMILIHAN CALON LEGISLATIF DEWAN PERWAKILAN RAKYAT REPUBLIK INDONESIA (DPR RI) PROVINSI BANTEN BERBASIS WEB DENGAN MENGGUNAKAN REACTJS DAN NODE JS”.
 
