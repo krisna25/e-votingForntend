@@ -3,9 +3,9 @@ import { Col, Row ,Badge} from 'reactstrap';
 var _ = require('lodash');
 
 class InfoCaleg extends Component {
-  constructor(props) {
-    super(props);
-}
+//   constructor(props) {
+//     super(props);
+// }
   render() {
     const { id,namaPartai,dapil,fotoCaleg, namaCaleg,suara ,bendera,rekapkursi} = this.props;
     let badge;
@@ -33,11 +33,26 @@ class InfoCaleg extends Component {
         badge = <Badge color="danger">Tidak mendapat Kursi</Badge>
       }
     }
+    
     return (
       <React.Fragment>
           <Row style={{width:'100%',paddingTop:'1em',paddingLeft:'1em',marginRight:'-4em'}}>
             <Col  xs="12" xl="12"  >
+              {(namaCaleg.length !== 'Nama Caleg' && namaPartai.length <= 0 ?(
               <div>
+                <strong className="text-uppercase"> Nama Caleg Pilihan Anda dari partai {namaPartai} </strong>
+                <div className="card" style={{marginTop:'1em'}}>
+                  <div className="clearfix p-0 card-body">
+                    <Row>
+                      <Col xl='12' md='12' sm='12'>
+                          <h2>Anda Tidak Memilih</h2>
+                      </Col>
+                    </Row>
+                  </div>
+                </div>
+              </div>
+              ):(
+                <div>
                 <strong className="text-uppercase"> Nama Caleg Pilihan Anda dari partai {namaPartai} </strong>
                 <div className="card" style={{marginTop:'1em'}}>
                   <div className="clearfix p-0 card-body">
@@ -62,6 +77,8 @@ class InfoCaleg extends Component {
                   </div>
                 </div>
               </div>
+              ))}
+             
             </Col>
           </Row>
       </React.Fragment>

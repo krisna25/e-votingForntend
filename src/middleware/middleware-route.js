@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import {  Route, Redirect } from 'react-router-dom';
 import { tokenAuth } from './cookies-manager';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -46,19 +46,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 
-const IsLoggedRoute = ({ component: Component, ...rest }) =>
-  // console.log(tokenAuth.tokenAuthenticated());
-  (
-    <Route
-      {...rest}
-      render={props => (
-        <Component
-          {...props}
-          isLoginAuthenticated={tokenAuth.tokenAuthenticated().authToken}
-        />
-  )}
-    />
-  );
+// const IsLoggedRoute = ({ component: Component, ...rest }) =>
+//   // console.log(tokenAuth.tokenAuthenticated());
+//   (
+//     <Route
+//       {...rest}
+//       render={props => (
+//         <Component
+//           {...props}
+//           isLoginAuthenticated={tokenAuth.tokenAuthenticated().authToken}
+//         />
+//   )}
+//     />
+//   );
 
 
 export {

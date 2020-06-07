@@ -32,7 +32,7 @@ class App extends Component {
           <Route exact path="/login" name="Login Page" component={Login} />
           <Route exact path="/register" name="Register Page" component={Register} />
           <Route exact path="/403" name="Page 403" component={Page403} />
-          <Route exact path="/403" name="Page 403" component={Page403} />
+          <Route exact path="/500" name="Page 500" component={Page500} />
           <Route exact path="/404" name="Page 404" component={Page404} />
           <PrivateRoute path="/dashboard/vote" name="vote" component={DefaultLayout}  roles={["user"] }/>
           <PrivateRoute path="/dashboard/" name="dashboard" component={DefaultLayout}  roles={["admin","user"] }/>

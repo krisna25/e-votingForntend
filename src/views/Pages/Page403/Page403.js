@@ -9,7 +9,7 @@ class Page403 extends Component {
       <div className="app flex-row align-items-center warning-background">
         <Container>
           <Row className="justify-content-center">
-            <img src={gambar} className="img-circle warning-img" />
+            <img src={gambar} className="img-circle warning-img" alt="gambar" />
           </Row>
           <Row className="justify-content-center">
             <Col md="6">

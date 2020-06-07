@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink, Button} from 'reactstrap';
+import {  DropdownItem, DropdownMenu, DropdownToggle, Nav,  NavLink} from 'reactstrap';
 import PropTypes from 'prop-types';
-import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
+import {  AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../../assets/img/brand/evoting.png';
 import sygnet from '../../assets/img/brand/evoting.png';
 import { withRouter } from "react-router-dom";
@@ -67,7 +67,6 @@ class DefaultHeader extends Component {
         ktp: document.getElementById("noKTP").value
       })
       const result = await postApi('/getWhereKtp',this.state)
-      console.log( this.state.ktp)
       if(result.status === 404 ){
         swal({
           title: "Anda tidak terdaftar!",
@@ -104,7 +103,7 @@ class DefaultHeader extends Component {
     const userData = tokenAuth.tokenAuthenticated();
     var loginStatus = userData.authToken;
     var roleUsers  = userData.dataToken.role;
-    const { children, ...attributes } = this.props;
+    // const { children, ...attributes } = this.props;
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -115,14 +114,14 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <ul className="d-md-down-none navbar-nav">
            {roleUsers !== 0 &&
-            <li className="px-3 nav-item"><a onClick={this.handleCekData} href="#" className="nav-link">Cek Data Anda</a></li>
+            <li className="px-3 nav-item"><a onClick={this.handleCekData} className="nav-link" href="#!">Cek Data Anda</a></li>
           }
           </ul>
         <Nav className="ml-auto" navbar>
           <AppHeaderDropdown direction="down">
             {loginStatus === true ? (
               <DropdownToggle nav>
-                <img src={userData.dataToken.ktp.foto} className="img-avatar"  />
+                <img  className="img-avatar"  src={userData.dataToken.ktp.foto}  alt=" booth catalog"  />
               </DropdownToggle>
             ):(
               <DropdownToggle nav>

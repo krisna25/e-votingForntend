@@ -16,6 +16,7 @@ var Banten1SumOfVote = 0;
 var Banten2SumOfVote = 0;
 var Banten3SumOfVote = 0;
 var loginStatus = '';
+var LogData = null;
 var userrole ='';
 var suara ='0';
 var bendera='';
@@ -85,7 +86,6 @@ class Hasil extends Component {
       }
       //mengambil hasil rekap kursi
       const ResultRekapSits = await fetchApi('/gethasilrekapkursi');
-      console.log(ResultRekapSits.data)
       if(ResultRekapSits){
         if(ResultRekapSits.data.length !== 0){
           ResultRekapBanten1Sits = ResultRekapSits.data[0].hasil
@@ -93,7 +93,6 @@ class Hasil extends Component {
           ResultRekapBanten3Sits = ResultRekapSits.data[2].hasil
           }
       }
-      console.log(ResultRekapBanten1Sits)
      
       //token User data
       const userData = tokenAuth.tokenAuthenticated();
@@ -106,8 +105,6 @@ class Hasil extends Component {
           this.setState({
             statusLifeCircle : voteLifeCircle.data[0].status
           })
-
-          console.log(this.state.statusLifeCircle)
           statusPublish = DataStatus.data[2].status;
           var getAllRekap = await fetchApi("/getRekapitulasi");
         //memberikan pesan ketika lifevote tidak sesuai
@@ -124,43 +121,49 @@ class Hasil extends Component {
           if (userData.authToken === true) {
             loginStatus=true
             userrole = userData.dataToken.role
+            LogData = null;
            //mengecek apakah user berstatus sebagai pemilih biasa
             if(userrole === 1){
               if (userData.dataToken.log !== null) {
+                LogData = userData.dataToken.log;
                 const logUser = userData.dataToken.log.split('/');
                 this.setState({
                   id:logUser[1]
                 })
               }else{
+                let UserData = await postApi('/getUserById',{id:userData.dataToken._id})
+                
+                LogData = UserData.data.log;
                 this.setState({
                   id:Cookies.get("id")
                 })
               }
-              const resultOfCaleg = await postApi('/getCalegbyId',this.state)
-              suara = resultOfCaleg.data[0].vote;
-              bendera = resultOfCaleg.data[0].idParpol.bendera;
-              namaCaleg = resultOfCaleg.data[0].name;
-              namaPartai = resultOfCaleg.data[0].idParpol.akronim;
-              fotoCaleg = resultOfCaleg.data[0].img;
-              calegDapil = resultOfCaleg.data[0].category;
-              calegid = resultOfCaleg.data[0]._id;
-              
-              if(resultOfCaleg.data[0].category === "Banten1"){
-                dataforinfo = ResultRekapBanten1Sits;
-              }else if(resultOfCaleg.data[0].category === "Banten2"){
-                dataforinfo = ResultRekapBanten2Sits;
-              }else if(resultOfCaleg.data[0].category === "Banten3"){
-                dataforinfo = ResultRekapBanten3Sits;
+              if (LogData !== null) {
+                let idcaleg = LogData.split('/')[1]
+                const resultOfCaleg = await postApi('/getCalegbyId',{id:idcaleg})
+                suara = resultOfCaleg.data[0].vote;
+                bendera = resultOfCaleg.data[0].idParpol.bendera;
+                namaCaleg = resultOfCaleg.data[0].name;
+                namaPartai = resultOfCaleg.data[0].idParpol.akronim;
+                fotoCaleg = resultOfCaleg.data[0].img;
+                calegDapil = resultOfCaleg.data[0].category;
+                calegid = resultOfCaleg.data[0]._id;
+                if(resultOfCaleg.data[0].category === "Banten1"){
+                  dataforinfo = ResultRekapBanten1Sits;
+                }else if(resultOfCaleg.data[0].category === "Banten2"){
+                  dataforinfo = ResultRekapBanten2Sits;
+                }else if(resultOfCaleg.data[0].category === "Banten3"){
+                  dataforinfo = ResultRekapBanten3Sits;
+                }
               }
+            
             }
           }else{
             loginStatus = false
           }
          //menghitung jumlah total user yang telah melakukan vote
           for (let index1 = 0; index1 < getAllRekap.data.length; index1++) {
-            console.log("masuk for ",getAllRekap.data[index1].vote[0])
             if(getAllRekap.data[index1].vote[0] !== "new vote"){
-              console.log("mausk",index1 )
               for (
                 let index = 0;
                 index <  getAllRekap.data[index1].vote[0].length;
@@ -260,7 +263,6 @@ class Hasil extends Component {
   }
   
   render() {
-    {console.log(this.state.statusLifeCircle)}
     return (
       <div className="animated fadeIn loginbackground" style={{padding:'0px'}} >
         <Row >
@@ -291,7 +293,7 @@ class Hasil extends Component {
                     </p>
                   </Alert>
                   <div>
-                    { loginStatus === true && userrole === 1 && 
+                    { (loginStatus === true && userrole === 1 ) && 
                       <InfoCaleg id={calegid} namaPartai = {namaPartai} fotoCaleg ={fotoCaleg} namaCaleg={namaCaleg} suara={suara} bendera={bendera} dapil={calegDapil} rekapkursi={dataforinfo} />
                     } 
                   </div>
@@ -357,7 +359,7 @@ class Hasil extends Component {
                                     pathname: '/home/hasil/print',
                                     search: '?daerah=Banten1?bagian=parpol'})
                                 } 
-                                  className="bg-success pull-right"> <i class="icon-printer icons font-3xl" ></i></Button>
+                                  className="bg-success pull-right"> <i className="icon-printer icons font-3xl" ></i></Button>
                                 )}
                               </CardHeader>
                               <CardBody>
@@ -418,7 +420,7 @@ class Hasil extends Component {
                                     pathname: '/home/hasil/print',
                                     search: '?daerah=Banten1?bagian=caleg'})
                                 } 
-                                  className="bg-success pull-right"> <i class="icon-printer icons font-3xl" ></i></Button>
+                                  className="bg-success pull-right"> <i className="icon-printer icons font-3xl" ></i></Button>
                                 )}
                               </CardHeader>
                               <CardBody>
@@ -482,7 +484,7 @@ class Hasil extends Component {
                                     pathname: '/home/hasil/print',
                                     search: '?daerah=Banten2?bagian=parpol'})
                                 } 
-                                  className="bg-success pull-right"> <i class="icon-printer icons font-3xl" ></i></Button>
+                                  className="bg-success pull-right"> <i className="icon-printer icons font-3xl" ></i></Button>
                                 )}
                               </CardHeader>
                               <CardBody>
@@ -542,7 +544,7 @@ class Hasil extends Component {
                                     pathname: '/home/hasil/print',
                                     search: '?daerah=Banten2?bagian=caleg'})
                                 } 
-                                  className="bg-success pull-right"> <i class="icon-printer icons font-3xl" ></i></Button>
+                                  className="bg-success pull-right"> <i className="icon-printer icons font-3xl" ></i></Button>
                                 )}
                               </CardHeader>
                               <CardBody>
@@ -606,7 +608,7 @@ class Hasil extends Component {
                                     pathname: '/home/hasil/print',
                                     search: '?daerah=Banten3?bagian=parpol'})
                                 } 
-                                  className="bg-success pull-right"> <i class="icon-printer icons font-3xl" ></i></Button>
+                                  className="bg-success pull-right"> <i className="icon-printer icons font-3xl" ></i></Button>
                                 )}
                               </CardHeader>
                               <CardBody>
@@ -666,7 +668,7 @@ class Hasil extends Component {
                                     pathname: '/home/hasil/print',
                                     search: '?daerah=Banten3?bagian=caleg'})
                                 } 
-                                  className="bg-success pull-right"> <i class="icon-printer icons font-3xl" ></i></Button>
+                                  className="bg-success pull-right"> <i className="icon-printer icons font-3xl" ></i></Button>
                                 )}
                               </CardHeader>
                               <CardBody>

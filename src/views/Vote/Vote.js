@@ -86,6 +86,8 @@ class Vote extends Component {
         return this.props.history.push("/403");
       }
       const voteLifeCircle = await fetchApi("/getVoteLifeCircle");
+    
+      
       this.setState({
         lifecirclestatus: voteLifeCircle.data[0].status
       })
@@ -215,7 +217,7 @@ class Vote extends Component {
                     <p className="mb-0"> Ada Telah Memilih Caleg <b> {this.state.namaCalegTerpilih} </b> dari partai <b>{this.state.namaPartaiTerpilih} </b></p> 
                 </div>
                 <div className="text-center">
-                  <img className="img-rounded" src={this.state.benderaParpolTerpilih} style={{width:'5em'}}></img>
+                  <img className="img-rounded" alt={"tets"} src={this.state.benderaParpolTerpilih} style={{width:'5em'}} ></img>
                 </div>
               </div>
               <div className="col-md-8" style={{marginLeft:'13em'}}>

@@ -12,7 +12,7 @@ render() {
     let faseSengketa;
     let faseFixHasil;
     if (status === 1) {
-        faseVote = <li className="steps__item  steps__item--active  steps__item--first"><a href="#" onClick={()=>this.props.history.push("/login")} className="steps__link">Voting</a></li>;
+        faseVote = <li className="steps__item  steps__item--active  steps__item--first"><a href="#!" onClick={()=>this.props.history.push("/login")} className="steps__link">Voting</a></li>;
     } else if (status > 1){
         faseVote = <li className="steps__item  steps__item--done  steps__item--first"><span className="steps__link">Voting</span></li>
     } else {
@@ -26,7 +26,7 @@ render() {
         faseRekap = <li className="steps__item "><span className="steps__link">Rekapitulasi</span></li>;
     }
     if (status === 3) {
-        fasePublish = <li className="steps__item  steps__item--active"><a href="#" onClick={()=>this.props.history.push("/home/hasil")} className="steps__link">Hasil Setelah Rekapitulasi</a></li>;
+        fasePublish = <li className="steps__item  steps__item--active"><a href="#!" onClick={()=>this.props.history.push("/home/hasil")} className="steps__link">Hasil Setelah Rekapitulasi</a></li>;
     } else if (status > 3){
         fasePublish = <li className="steps__item  steps__item--done"><span className="steps__link">Hasil Setelah Rekapitulasi</span></li>;
     } else {
@@ -40,7 +40,7 @@ render() {
         faseSengketa = <li className="steps__item "><span className="steps__link">Penyelesaian Sengketa</span></li>;
     }
     if (status === 5) {
-        faseFixHasil = <li className="steps__item  steps__item--active steps__item--last"><a href="#" onClick={()=>this.props.history.push("/home/hasil")} className="steps__link">Hasil akhir</a></li>;
+        faseFixHasil = <li className="steps__item  steps__item--active steps__item--last"><a href="#!" onClick={()=>this.props.history.push("/home/hasil")} className="steps__link">Hasil akhir</a></li>;
     } else if (status > 5){
         faseFixHasil = <li className="steps__item  steps__item--done steps__item--last"><span className="steps__link">Hasil akhir</span></li>;
     } else {

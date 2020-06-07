@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import {  Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import Datatable from 'react-bs-datatable'; // Import this package
 import { fetchApi } from '../../middleware/api';
-import { postApi } from "../../middleware/api";
 var moment = require('moment'); 
 var data = []
 const header = [
@@ -36,7 +35,7 @@ class Data extends Component {
     super(props);
     this.state = {
       dataBody:[],
-      dataParpol:''
+      dataParpol:null
     }
   }
 
@@ -57,11 +56,11 @@ class Data extends Component {
           'dapil': element.category
         })
       }
+      
       this.setState({
         dataBody:data,
         dataParpol: AllParpolData.data
       })
-      console.log(data)
     }
   }
   render() {
@@ -105,10 +104,10 @@ class Data extends Component {
                   <th className="text-center">Bendera</th>
                 </tr>
                 </thead>
-                {this.state.dataParpol !== '' &&
+                {this.state.dataParpol !== null &&
                 <tbody>
                   {this.state.dataParpol.map((item, i) => (
-                    <tr key={item.id}>
+                    <tr key={i}>
                       <td className="text-center" style={{width:'1em'}}>
                         <div className="avatar">
                         {i+1}

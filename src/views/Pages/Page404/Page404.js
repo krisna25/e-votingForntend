@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import gambar from "../../../assets/img/notFound.png";
 import "../../../assets/css/warning.css";
-import { Button, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 
 class Page404 extends Component {
   render() {
@@ -9,7 +9,7 @@ class Page404 extends Component {
       <div className="app flex-row align-items-center warning-background">
         <Container>
           <Row className="justify-content-center">
-            <img src={gambar} className="img-circle warning-img" />
+            <img alt="gambar warning" src={gambar} className="img-circle warning-img" />
           </Row>
           <Row className="justify-content-center">
             <Col md="6">

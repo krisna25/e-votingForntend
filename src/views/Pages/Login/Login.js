@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { postApi } from "../../../middleware/api";
 import { tokenAuth } from "../../../middleware/cookies-manager";
 import "../../../assets/css/registerAndLogin.css";
-import {withGetScreen} from 'react-getscreen'
 import { Button, Card, CardBody, CardGroup, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row,Modal, ModalBody, ModalFooter, ModalHeader, } from 'reactstrap';
 import swal from 'sweetalert';
 
@@ -243,7 +242,7 @@ class Login extends Component {
   }
 
   async onHandleSubmitLogin() {
-    const { noKtp, noKk, password } = this.state;
+    // const { noKtp, noKk, password } = this.state;
     const res = await postApi("/login", this.state);
     if (res) {
       if (res.status === 200) {
@@ -483,11 +482,13 @@ class Login extends Component {
                       <Col xs="6" className="text-right">
                         <Button color="link" className="px-0 text-muted" onClick={this.toggleForgotPassword}> Lupa Password?</Button>
                       </Col>
-                     
                     </Row>
-                    {(this.props.isMobile() || this.props.isTablet()) && 
-                    <Row>
-                      <Col xs="12">
+                    <Row className="d-lg-none">
+                      <Col xs="12" className="pt-3">
+                      <h2 className="text-center">Registrasi</h2>
+                      <p className="text-center">Silahkan melakukan Registrasi terlebih dahulu sebelum anda melakukan login. 
+                        Jika anda sudah melakukan registrasi sebelumnya anda dapat langsung melakukan login. 
+                        Pastikan bahwa KTP anda terdaftar sebagai DPT</p>
                       <Button color="dark" 
                           onClick={this.toggleRegister}
                           style={{position:'blok', width:'100%',marginTop:'2em'}}
@@ -497,7 +498,6 @@ class Login extends Component {
                         <p><small>kembali ke halaman <Button className="btn btn-ghost-success" onClick={()=>this.props.history.push("/home")} ><i className="cui-home"></i>Home</Button></small></p>
                       </Col>
                     </Row>
-                    }
                   </CardBody>
                 </Card>
                 <Card className="py-5 d-md-down-none d-md-12" style={{ width: 44 + '%' }}>
@@ -689,4 +689,4 @@ class Login extends Component {
   }
 }
 
-export default withGetScreen(Login);
+export default Login;

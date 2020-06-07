@@ -130,8 +130,6 @@ class Dashboard extends Component {
       dataSebaran:vote,
       sebaranDataState:!this.state.sebaranDataState
     })
-    console.log(this.state.sebaranDataState)
-    console.log(vote)
   }
 
   async pilihCaleg(dapil,data,idkursi){
@@ -148,7 +146,6 @@ class Dashboard extends Component {
             }else if(element.dapil === "Banten3"){
               ResultRekapBanten3Sits = element.hasil
           }
-          console.log("data sits 1 ", ResultRekapBanten1Sits )
           this.setState({
             Banten1SumOfCalegSitsState : ResultRekapBanten1Sits,
             Banten2SumOfCalegSitsState : ResultRekapBanten2Sits,
@@ -172,7 +169,6 @@ class Dashboard extends Component {
   }
 
   async pastikanCaleg(data,dapil,idkursi){
-    console.log("data ",data)
     tabelPastikanCaleg = this.createTablePastikan(data,dapil,idkursi)
     this.setState({
       pastikan:!this.state.pastikan
@@ -274,7 +270,7 @@ class Dashboard extends Component {
     }
     if (Banten1Rekap !== ''  && Banten2Rekap !== '' && Banten2Rekap !== '' && ResultRekapSits !== '') {
       if(this.state.lifecirclestatus === 2){
-        var status = 2
+        // var status = 2
         const result = await postApi('/updateStatusLifeCircle', {id:idLifeCircle,status:3})
         if(result){
           this.setState({
@@ -327,12 +323,12 @@ class Dashboard extends Component {
   }
 
   async onStatusVoteChange(id){
-    var id = id ; 
+    // var id = id ; 
     var status = ''
     if (this.state.votingStatus === true) {
-      var status = false
+       status = false
     }else{
-      var status = true
+       status = true
     }
     if (this.state.votingStatusButton === true) {
       const result = await postApi('/updateStatus', {id, status})
@@ -350,13 +346,14 @@ class Dashboard extends Component {
   } 
 
   async onStatusRekapChange(id){
-    var id = id ; 
+    // var id = id ; 
     var status = ''
     if (this.state.rekapitulasiStatus === true) {
-      var status = false
+       status = false
     }else{
-      var status = true
+       status = true
     }
+
     const result = await postApi('/updateStatus', {id, status})
     if (result.status === 200) {
       await swal({
@@ -370,8 +367,8 @@ class Dashboard extends Component {
     }
   } 
   async onStatusLifeCircleButton(id,ket){
-    var id = id ; 
-    var idButton = idButton;
+    // var id = id ; 
+    // var idButton = idButton;
     var status = this.state.lifecirclestatus;
     if (status >= 3 || ket === 'ulang') {
       if(status === 5 || ket === 'ulang'){
@@ -423,8 +420,8 @@ class Dashboard extends Component {
         icon: "success",
       })
       if(status === 5 ){
-        var id = this.state.publishStatusid
-        var status = true
+         id = this.state.publishStatusid
+         status = true
         const publishupdate =  await postApi('/updateStatus',{id,status})
         if(publishupdate){
           this.setState({
@@ -434,13 +431,13 @@ class Dashboard extends Component {
       }else if( status === 0){
         //ubah kembali status ke status awal
         var statusBackToFalse = '';
-        var newvote = ''
+        // var newvote = ''
         var arr1 = [banten1id,banten2id,banten3id]
         var arr = [this.state.rekapitulasiStatusid ,this.state.votingStatusid,this.state.publishStatusid]
         //new rekapitulasi
         for (let index = 0; index < arr1.length; index++) {
           const element = arr1[index];
-          newvote =  await postApi('/rekapnewvote',{id:element})
+           await postApi('/rekapnewvote',{id:element})
         }
         //update status
         for (let index = 0; index < arr.length; index++) {
@@ -486,13 +483,13 @@ class Dashboard extends Component {
   }
 
   async onStatusPublishChange(id){
-    var id = id ; 
-    var idButton = idButton;
+    // var id = id ; 
+    // var idButton = idButton;
     var status = ''
     if (this.state.publishStatus === true) {
-      var status = false
+       status = false
     }else{
-      var status = true
+       status = true
     }
    
     const result = await postApi('/updateStatus', {id, status})
@@ -509,12 +506,12 @@ class Dashboard extends Component {
   } 
 
   async onStatusVoteChangeButton(id){
-    var id = id ; 
+    // var id = id ; 
     var status = ''
     if (this.state.votingStatusButton === true) {
-      var status = false
+       status = false
     }else{
-      var status = true
+      status = true
     }
    
     const result = await postApi('/updateStatus', {id, status})
@@ -529,12 +526,12 @@ class Dashboard extends Component {
   } 
 
   async onStatusRekapChangeButton(id){
-    var id = id ; 
+    // var id = id ; 
     var status = ''
     if (this.state.rekapitulasiStatusButton === true) {
-      var status = false
+       status = false
     }else{
-      var status = true
+       status = true
     }
     const result = await postApi('/updateStatus', {id, status})
     if (result.status === 200 ) {
@@ -548,12 +545,12 @@ class Dashboard extends Component {
   } 
 
   async onStatusPublishChangeButton(id){
-    var id = id ; 
+    // var id = id ; 
     var status = ''
     if (this.state.publishStatusButton === true) {
-      var status = false
+       status = false
     }else{
-      var status = true
+       status = true
     }
     const result = await postApi('/updateStatus', {id, status})
     if (result.status === 200 ) {
@@ -610,7 +607,7 @@ class Dashboard extends Component {
   
 
   async onHandleSubmitSits(){
-    const { Banten1, Banten2, Banten3} = this.state;
+    // const { Banten1, Banten2, Banten3} = this.state;
     const kursi = await postApi('/kursiUpdate',this.state);
     if(kursi){
       this.setState({
@@ -666,6 +663,7 @@ class Dashboard extends Component {
 
   
   async componentWillMount() {
+    
     var banyakPemilih = 0;
     var User = {};
     try{
@@ -700,12 +698,14 @@ class Dashboard extends Component {
       const Pemilih = await fetchApi("/getAllKtp");
       banyakPemilih = Pemilih.data.length
       SumOfVoters =  banyakPemilih;
+      
     }catch(err){
       console.log(err)
     }
 
     try{
       //status voting
+      
      
       const DataStatus = await fetchApi("/getStatusVote");
       const voteLifeCircle = await fetchApi("/getVoteLifeCircle");
@@ -724,6 +724,8 @@ class Dashboard extends Component {
       const statusVotingButton = DataStatus.data[3].status;
       const statusRekapitulasiButton = DataStatus.data[4].status;
 
+
+      
       if (DataStatus.data[0].timeStart !== null && DataStatus.data[0].timeEnd !== null) {
         this.setState({
           startDateTimeRekap: new Date(DataStatus.data[0].timeStart),
@@ -878,7 +880,8 @@ class Dashboard extends Component {
 
       
     }catch(err){
-
+      console.log(err);
+      
     }
 
     BantenTotalSumOfVote = Banten1SumOfVote + Banten2SumOfVote + Banten3SumOfVote;
@@ -918,7 +921,7 @@ class Dashboard extends Component {
                 </td>
                 )
             }else if(j === 5){
-              if(this.state.lifecirclestatus === 3){
+              if(this.state.lifecirclestatus === 3 || this.state.lifecirclestatus === 4){
                 children.push(
                   <td className="text-center" key={j}>
                     <Button title= "Lihat"  outline color="primary" onClick={()=> this.SebaranDataCaleg(data[i].vote)}>
@@ -928,7 +931,7 @@ class Dashboard extends Component {
                 ) 
               } 
             }else if(j === 6){
-              if(this.state.lifecirclestatus === 3){
+              if(this.state.lifecirclestatus === 3 || this.state.lifecirclestatus === 4){
                 children.push(
                   <td className="text-center" key={j}>
                     <Button title= "Pilih" outline color="primary" onClick={()=> this.pilihCaleg(dapil,data[i],idkursi)}>
@@ -957,7 +960,7 @@ class Dashboard extends Component {
         //Inner loop to create children
         for (let j = 0; j < 6; j++) {
         //
-            if(j == 0) {
+            if(j === 0) {
               children.push(  
                     <td className="text-center" key={data[i].id} >
                       {i + 1}
@@ -986,9 +989,10 @@ class Dashboard extends Component {
                     <Badge color="success">Mendapat Kursi</Badge>
                   </td>
                 )
-                if(this.state.lifecirclestatus === 3){
+                if(this.state.lifecirclestatus === 3 ||  this.state.lifecirclestatus  === 4){
                   children.push(
                     <td className="text-center" key={8}>
+                      -
                         {/* <Button outline color="primary" onClick="">
                             <i className="fa fa-exchange " ></i>&nbsp;Ganti
                         </Button> */}
@@ -1001,7 +1005,7 @@ class Dashboard extends Component {
                       <Badge color="danger">Caleg Sedang Ditentukan</Badge>
                     </td>
                   ) 
-                  if(this.state.lifecirclestatus  === 3 ){
+                  if(this.state.lifecirclestatus  === 3 ||  this.state.lifecirclestatus  === 4){
                     children.push(
                       <td className="text-center" key={8}>
                         <Button outline color="success" onClick={()=> this.pastikanCaleg(data[i].data,dapil,data[i].idkursi)}>
@@ -1026,26 +1030,28 @@ class Dashboard extends Component {
   //   bypass = 0
   // }
   render() {
+
+    
     const{Banten1,Banten2,Banten3} = this.state
     isEnabled =
       Banten1.length > 0 && Banten2.length > 0 && Banten3.length > 0;
 
-    if(this.state.lifecirclestatus == 0){
+    if(this.state.lifecirclestatus === 0){
       ButtonTitle = 'E-voting belum dimulai';
       pesanRekapitulasi = <b style={{wordBreak:'break-all', fontSize:'20  px',padding:'2px'}} className="homeBackground text-white">E-Voting Belum dimulai..</b>
-    }else if(this.state.lifecirclestatus == 1){
+    }else if(this.state.lifecirclestatus === 1){
       ButtonTitle = 'E-voting sedang berlangsung';
       pesanRekapitulasi =<b style={{wordBreak:'break-all', fontSize:'20  px',padding:'2px'}} className="homeBackground text-white">pemungutan suara sedang berlangsung..</b>
-    }else if(this.state.lifecirclestatus == 2){
+    }else if(this.state.lifecirclestatus === 2){
       ButtonTitle = 'Rekapitulasi sedang berlangsung ';
       pesanRekapitulasi =<b style={{wordBreak:'break-all', fontSize:'20  px',padding:'2px'}} className="homeBackground text-white">Rekapitulasi sedang berlangsung..</b>
-    }else if(this.state.lifecirclestatus == 3){
+    }else if(this.state.lifecirclestatus === 3){
       ButtonTitle = 'Lanjut ke tahapan Sengketa ';
       pesanRekapitulasi = <b style={{wordBreak:'break-all', fontSize:'20  px',padding:'2px'}} className="homeBackground text-white">Pengumuman hasil rekapitulasi..</b>
-    }else if(this.state.lifecirclestatus == 4){
+    }else if(this.state.lifecirclestatus === 4){
       ButtonTitle = 'Lanjut ke tahapan hasil akhir ';
       pesanRekapitulasi = <b style={{wordBreak:'break-all', fontSize:'20  px',padding:'2px'}} className="homeBackground text-white">Penyelesaian sengketa..</b>
-    }else if(this.state.lifecirclestatus == 5){
+    }else if(this.state.lifecirclestatus === 5){
       ButtonTitle = 'Lanjut ke tahapan awal lagi  ';
       pesanRekapitulasi = <b style={{wordBreak:'break-all', fontSize:'20  px',padding:'2px'}} className="homeBackground text-white">Pengumuman hasil akhir..</b>
     }
@@ -1160,7 +1166,7 @@ class Dashboard extends Component {
                     <hr/>
                     <Row>
                       <Col>
-                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-warning"></i> Tombol aktifkan &  non aktifkan secara langsung </span>
+                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-warning"></i> on/off Vote </span>
                       </Col>
                     </Row>
                     <Row>
@@ -1168,7 +1174,7 @@ class Dashboard extends Component {
                       <AppSwitch className={'mx-1'}  checked={this.state.votingStatusButton} variant={'3d'} outline={'alt'} color={'success'}  label onClick={() => this.onStatusVoteChangeButton(this.state.votingStatusidButton)} dataOn={'\u2713'} dataOff={'\u2715'} />
                       </Col>
                       <Col xs="8" sm="8" style={{marginRight:'-2.5em'}}>
-                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-hand-o-left"></i> On/Off Switch Status<br/> On/Off Status <i className="fa fa-hand-o-right"></i></span>
+                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-hand-o-left"></i>matikan automatic Switch status<br/> On/Off Vote <i className="fa fa-hand-o-right"></i></span>
                       </Col>
                       <Col xs="1" sm="1">
                         {this.state.votingStatusButton === true ?(
@@ -1241,7 +1247,7 @@ class Dashboard extends Component {
                       </FormGroup>
                       <FormGroup className="form-actions">
                         {this.state.lifecirclestatus === 0 ? (
-                          <Button size="sm" color="muted" disabled={!isEnabled} onClick={() => this.onHandleSubmitSits()}>Submit</Button>
+                          <Button size="sm" color="secondary" disabled={!isEnabled} onClick={() => this.onHandleSubmitSits()}>Submit</Button>
                         ):(
                           <Button size="sm" color="muted" disabled onClick={() => this.onHandleSubmitSits()}>Submit</Button>
                         )}
@@ -1269,7 +1275,7 @@ class Dashboard extends Component {
                     <hr/>
                     <Row>
                       <Col>
-                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-warning"></i> Tombol aktifkan & non aktifkan secara langsung </span>
+                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-warning"></i>  on/off Rekapitulasi </span>
                       </Col>
                     </Row>
                     <Row>
@@ -1277,7 +1283,7 @@ class Dashboard extends Component {
                         <AppSwitch title="coba" className={'mx-1'}  checked={this.state.rekapitulasiStatusButton}  variant={'3d'} outline={'alt'} color={'primary'}  label onClick={() => this.onStatusRekapChangeButton(this.state.rekapitulasiStatusidButton)} dataOn={'\u2713'} dataOff={'\u2715'} />
                       </Col>
                       <Col xs="8" sm="8" lg="8" style={{marginRight:'-2.5em'}}>
-                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-hand-o-left"></i> On/Off Switch Status<br/> On/Off Status <i className="fa fa-hand-o-right"></i></span>
+                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-hand-o-left"></i>matikan automatic Switch status<br/> On/Off Status <i className="fa fa-hand-o-right"></i></span>
                       </Col>
                       <Col xs="1" sm="1" lg="1">
                         {this.state.rekapitulasiStatusButton === true ?(
@@ -1293,7 +1299,7 @@ class Dashboard extends Component {
                   <CardHeader>
                     Tombol kontrol e-voting
                     <div className="card-header-actions">
-                      <a className="card-header-action btn btn-minimize" data-target="#collapseExample" onClick={this.toggleCollapse}><i className="icon-arrow-up"></i></a>
+                        <a className="card-header-action btn btn-minimize" data-target="#collapseExample" onClick={this.toggleCollapse} href="#!"><i className="icon-arrow-up"></i></a>
                     </div>
                   </CardHeader>
                   <Collapse  isOpen={this.state.collapse} id="collapseExample">
@@ -1382,7 +1388,7 @@ class Dashboard extends Component {
                     <hr/>
                     <Row>
                       <Col>
-                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-warning"></i> Tombol aktifkan & non aktifkan secara langsung </span>
+                        <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-warning"></i> on/off Publish </span>
                       </Col>
                     </Row>
                     <Row>
@@ -1390,7 +1396,7 @@ class Dashboard extends Component {
                         <AppSwitch className={'mx-1'}  checked={this.state.publishStatusButton} variant={'3d'} outline={'alt'} color={'danger'}  label onClick={() => this.onStatusPublishChangeButton(this.state.publishStatusidButton)} dataOn={'\u2713'} dataOff={'\u2715'} />
                       </Col>
                       <Col xs="8" sm="8" style={{marginRight:'-2.5em'}}>
-                      <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-hand-o-left"></i> On/Off Switch Status<br/> On/Off Status <i className="fa fa-hand-o-right"></i></span>
+                      <span className="text-muted" style={{fontSize:'12px'}}><i className="fa fa-hand-o-left"></i>matikan automatic Switch status<br/> On/Off Status <i className="fa fa-hand-o-right"></i></span>
                       </Col>
                       <Col xs="1" sm="1">
                         {this.state.publishStatusButton === true ?(
@@ -1752,7 +1758,7 @@ class Dashboard extends Component {
                                 <th>Nama Partai </th>
                                 <th className="text-center">Bendera</th>
                                 <th className="text-center">Status</th>
-                                {this.state.lifecirclestatus === 3 &&
+                                {(this.state.lifecirclestatus === 3 || this.state.lifecirclestatus === 4)  &&
                                   <th className="text-center">Aksi</th>
                                 }
                               </tr>
@@ -1774,7 +1780,7 @@ class Dashboard extends Component {
                                 <th>Nama Partai </th>
                                 <th className="text-center">Bendera</th>
                                 <th className="text-center">Status</th>
-                                {this.state.lifecirclestatus === 3 &&
+                                {(this.state.lifecirclestatus === 3  || this.state.lifecirclestatus === 4) &&
                                   <th className="text-center">Aksi</th>
                                 }
                               </tr>
@@ -1796,7 +1802,7 @@ class Dashboard extends Component {
                                 <th>Nama Partai </th>
                                 <th className="text-center">Bendera</th>
                                 <th className="text-center">Status</th>
-                                {this.state.lifecirclestatus === 3 &&
+                                {(this.state.lifecirclestatus === 3  || this.state.lifecirclestatus === 4)&&
                                   <th className="text-center">Aksi</th>
                                 }
                               </tr>

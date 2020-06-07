@@ -25,7 +25,6 @@ const fetchApi = async (endpoint = '') => {
  */
 const postApi = async (endpoint = '', values) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
-  console.log(fullUrl);
   const result = await instanceAxios.post(fullUrl, values).catch((error) => {
     if (error.response) {
       return { status: error.response.status };

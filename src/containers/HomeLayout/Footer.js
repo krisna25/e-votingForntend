@@ -5,7 +5,7 @@ class Footer extends Component {
   render() {
     return (
       <React.Fragment>
-         <Row className="homeBackground" style={{position:'fixed', bottom:'0px',left:'0px',right:'0px'}}>
+         <Row className="homeBackground " style={{position:'fixed', bottom:'0px',left:'0px',right:'0px', zIndex:10}}>
             <Col>
               <div className="text-white text-center " style={{fontWeight:'bold',height:'3em',paddingTop:'1em'}}>
                   Krisna Arief Budiman © 2018

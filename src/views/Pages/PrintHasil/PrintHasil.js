@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import ReactToPrint from "react-to-print";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Header from '../../../containers/HomeLayout/Header';
 import Footer from '../../../containers/HomeLayout/Footer';
 import "../../../assets/css/warning.css";
 import surat from "../../../assets/img/surat.png";
 import { fetchApi } from "../../../middleware/api";
-import { Button, Col, Container, Input, Card, CardBody,Progress, Badge,Table, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import {  Col, Card, CardBody, Badge,Table, Row } from 'reactstrap';
 var ResultRekapBantenSits = '';
 var RekapBanten = '';
 var BantenSumOfVote = 0;
@@ -134,7 +134,6 @@ class ComponentToPrint extends React.Component {
   render() {
     return (
       <div style={{margin:'2.4em'}}>
-                    {console.log(this.props)}
       <div className="text-center">
         <img src={surat} className="surat img-fluid" alt="surat"  style={{width:'100%',height:'120%',marginBottom:"-4em"}}/>
           <div className="centered" style={{marginBottom:"4em"}}>
@@ -234,8 +233,6 @@ class PrintHasil extends Component {
         this.setState({
           statusLifeCircle : voteLifeCircle.data[0].status
         })
-
-        console.log(this.state.statusLifeCircle)
         statusPublish = DataStatus.data[2].status;
       }
   }
@@ -250,8 +247,8 @@ class PrintHasil extends Component {
                   {(statusPublish === true && this.state.statusLifeCircle === 3) || (statusPublish === true && this.state.statusLifeCircle === 5 )? ( 
                   <div>
                   <ReactToPrint
-                      trigger={() => <a className="btn btn-success" title="Print" href="#">
-                      <i class="icon-printer icons font-4xl d-block mt-2" ></i>Print Tabel
+                      trigger={() => <a className="btn btn-success" title="Print" href="#!">
+                      <i className="icon-printer icons font-4xl d-block mt-2" ></i>Print Tabel
                       </a>}
                       content={() => this.componentRef}
                     />
@@ -260,7 +257,7 @@ class PrintHasil extends Component {
                   ):(
                     <div>
                       {this.state.statusLifeCircle !== '' &&
-                      <div className="jumbotron jumbotron-fluid text-center"><div class="container-fluid"><h1 className="display-3">Tidak Dapat Melakukan Print</h1><p className="lead">Maaf anda tidak dapat Melakukan Print</p></div></div>
+                      <div className="jumbotron jumbotron-fluid text-center"><div className="container-fluid"><h1 className="display-3">Tidak Dapat Melakukan Print</h1><p className="lead">Maaf anda tidak dapat Melakukan Print</p></div></div>
                       }
                     </div>
                   )}

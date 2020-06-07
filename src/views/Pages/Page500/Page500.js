@@ -9,7 +9,7 @@ class Page500 extends Component {
       <div className="app flex-row align-items-center warning-background">
       <Container>
         <Row className="justify-content-center">
-          <img src={gambar} className="rounded warning-img" />
+          <img src={gambar} className="rounded warning-img" alt="gambar" />
         </Row>
         <Row className="justify-content-center">
           <Col md="6">

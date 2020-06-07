@@ -111,7 +111,7 @@ class Header extends Component {
                         <img style={{height:'40px'}} src={userData.dataToken.ktp.foto} className="img-avatar" alt={userData.dataToken.ktp.nama} />
                     </DropdownToggle>
                     ):(
-                    <DropdownToggle nav>
+                    <DropdownToggle nav style={{fontSize:'20px'}}>
                         <i className="fa fa-user-o" ></i>
                     </DropdownToggle>
                     )}

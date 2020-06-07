@@ -1,8 +1,8 @@
 import React from 'react';
 import Loadable from 'react-loadable'
-import DefaultLayout from './containers/DefaultLayout';
-import { Login, Page403, Page404, Page500, Register,Home } from './views/Pages';
-import { PrivateRoute } from './middleware/middleware-route';
+// import DefaultLayout from './containers/DefaultLayout';
+import { Home } from './views/Pages';
+// import { PrivateRoute } from './middleware/middleware-route';
 function Loading() {
   return <div>Loading...</div>;
 }

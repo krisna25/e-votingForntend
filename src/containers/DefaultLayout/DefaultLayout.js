@@ -3,8 +3,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import {tokenAuth} from '../../middleware/cookies-manager';
 import {
-  AppAside,
-  AppBreadcrumb,
+  // AppAside,
+  // AppBreadcrumb,
   AppFooter,
   AppHeader,
   AppSidebar,

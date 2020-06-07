@@ -75,16 +75,14 @@ class Home extends Component {
     const userData = tokenAuth.tokenAuthenticated();
     try {
       const DataStatus = await fetchApi("/getStatusVote");
-      console.log(DataStatus)
       const statusRekapitulasi = DataStatus.data[0].status;
       const statusVoting = DataStatus.data[1].status;
       const voteLifeCircle = await fetchApi("/getVoteLifeCircle")
-      console.log("life circle ",voteLifeCircle.data[0].status)
       const voteLifeCircleStatus = voteLifeCircle.data[0].status;
       this.setState({
         rekapitulasiStatus:statusRekapitulasi,
         votingStatus:statusVoting,
-        lifecirclestatus: voteLifeCircle.data[0].status,
+        lifecirclestatus: Number(voteLifeCircle.data[0].status),
       })
       if (DataStatus.data[0].timeStart !== null && DataStatus.data[0].timeEnd !== null ) {
         this.setState({
@@ -140,17 +138,17 @@ class Home extends Component {
         </CarouselItem>
       );
     });
-    if(this.state.lifecirclestatus == 0){
+    if(this.state.lifecirclestatus === 0){
       pesanStatus = <Badge className="badge-info" style={{wordBreak:'break-all', fontSize:'22px',padding:'2px'}} >E-Voting Belum dimulai..</Badge>
-    }else if(this.state.lifecirclestatus == 1){
+    }else if(this.state.lifecirclestatus === 1){
       pesanStatus =<Badge className="badge-info" style={{wordBreak:'break-all', fontSize:'22px',padding:'2px'}} >pemungutan suara sedang berlangsung..</Badge>
-    }else if(this.state.lifecirclestatus == 2){
+    }else if(this.state.lifecirclestatus === 2){
       pesanStatus =<Badge className="badge-info" style={{wordBreak:'break-all', fontSize:'22px',padding:'2px'}} >Rekapitulasi sedang berlangsung..</Badge>
-    }else if(this.state.lifecirclestatus == 3){
+    }else if(this.state.lifecirclestatus === 3){
       pesanStatus = <Badge className="badge-info" style={{wordBreak:'break-all', fontSize:'22px',padding:'2px'}} >Pengumuman hasil rekapitulasi..</Badge>
-    }else if(this.state.lifecirclestatus == 4){
+    }else if(this.state.lifecirclestatus === 4){
       pesanStatus = <Badge className="badge-info" style={{wordBreak:'break-all', fontSize:'22  px',padding:'2px'}} >Penyelesaian sengketa..</Badge>
-    }else if(this.state.lifecirclestatus == 5){
+    }else if(this.state.lifecirclestatus === 5){
       pesanStatus = <Badge className="badge-info" style={{wordBreak:'break-all', fontSize:'22  px',padding:'2px'}} >Pengumuman hasil akhir..</Badge>
     }
     return (
@@ -185,9 +183,9 @@ class Home extends Component {
                     <Col xs="12" xl="4"> 
                     <Card>
                         <CardBody>
-                          <iframe width="100%" height="210px" src="https://www.youtube.com/embed/Nyzm_t2alVs" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                          <iframe title="video tahapan pemilu" width="100%" height="210px" src="https://www.youtube.com/embed/Nyzm_t2alVs" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                           <hr/>
-                          <iframe width="100%" height="210px" src="https://www.youtube.com/embed/1zy7ujq0h-s" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                          <iframe title="edukasi pentingnya pemilu" width="100%" height="210px" src="https://www.youtube.com/embed/1zy7ujq0h-s" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                         </CardBody>
                       </Card>
                     </Col>
