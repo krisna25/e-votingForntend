@@ -1,6 +1,12 @@
 ##Aplikasi e-voting dibuat dengan Free template coreUI
 # perhatikan:
  e-votingFrontend dan e-voting Backend adalah satu kesatuan yang tidak bisa dipisahkan
+ 
+Cara Menjalankan :
+- install node module
+  npm install
+- jalankan app:
+  npm start
 
 Disclaimer:
 
