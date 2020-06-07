@@ -30,7 +30,7 @@
     "express": "^4.16.3",
     "flag-icon-css": "^3.0.0",
     "font-awesome": "^4.7.0",
-    "jquery": "^1.9.1",
+    "jquery": "^3.5.1",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
