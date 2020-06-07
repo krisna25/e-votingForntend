@@ -1,6 +1,6 @@
 ##Aplikasi e-voting dibuat dengan Free template coreUI
 # perhatikan:
-# e-votingFrontend dan e-voting Backend adalah satu kesatuan yang tidak bisa dipisah
+ e-votingFrontend dan e-voting Backend adalah satu kesatuan yang tidak bisa dipisahkan
 
 Disclaimer:
 
